@@ -5,4 +5,4 @@ xnots.1.txt:	../xnots.1
 
 .PHONY: rsync
 rsync:
-	rsync -rlzvC --delete --delete-excluded --exclude=Makefile --exclude='*.swp' . gi1242@shell.sourceforge.net:/home/groups/x/xn/xnots/htdocs
+	rsync -rLzvC --delete --delete-excluded --exclude=Makefile --exclude='*.swp' . gi1242@shell.sourceforge.net:/home/groups/x/xn/xnots/htdocs
