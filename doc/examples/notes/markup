@@ -1,0 +1,7 @@
+* background	: #006000
+
+Simple markup (as supported by the <b>pango</b> library) can be used in your notes. For example
+
+	<tt>&lt;span background="#a0a000"&gt;highlighted&lt;/span&gt;</tt>
+
+produces <span background="#a0a000">highlighted</span>. Don't forget to set the <i>useMarkup</i> option.

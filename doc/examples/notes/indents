@@ -1,0 +1,9 @@
+* background	: #606000
+* roundRadius	: 0
+* indent	: -15
+
+<span variant="smallcaps" size='larger' underline='low'>HANGING INDENTS</span>
+	Hanging indents can be obtained by using a negative value for the indent option. In this case the first alignment tab is set to the value of the indent (so to produce an 'indented' paragraph, just start the first line with a tab).
+
+<b>o</b>	Bulleted lists can be made to look especially nice with hanging indents.
+<b>o</b>	Don't forget a leading <i>tab</i> character after the bullet.

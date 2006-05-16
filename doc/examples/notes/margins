@@ -1,0 +1,5 @@
+* background	: #303060
+
+<span size='larger' underline='single'>MARGINS</span>
+
+The vertical size of your note can grow automatically to exactly fit the contents of your note. Just set the <i>botMargin</i> to a non-zero value to use this feature. If you don't want your notes to vertically resize automatically, then just set <i>botMargin</i> to 0.

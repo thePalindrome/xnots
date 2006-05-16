@@ -1,0 +1,193 @@
+xnots(1)		  BSD General Commands Manual		      xnots(1)
+
+NAME
+     xnots -- A desktop sticky note program for Unix geeks.
+
+SYNOPSIS
+     xnots [-q] [dir [file]]
+
+DESCRIPTION
+     xnots  is	a  desktop sticky note system for the X window system and unix
+     geeks.  xnots is designed so that all your sticky notes and  to-do	 lists
+     are text files in a certain directory (by default ~/.xnots).  The idea is
+     that any unix geek should abhor typing  text  into	 anything  EXCEPT  his
+     favourite	editor. These files completely control the appearance and con-
+     tent of the displayed sticky notes, and thus the average unix  geek  will
+     never  have to use the mouse or (god forbid) navigate using menus to con-
+     trol xnots.
+
+     On startup xnots first reads options from the  file  ~/.xnotsrc,  or  the
+     file  file	 supplied  on the command line. Then xnots reads the directory
+     ~/.xnots (or the directory dir supplied on the command  line),  and  dis-
+     plays all files found in this directory as sticky notes.
+
+     xnots  then  watches  this	 directory for changes so that changes made to
+     files in this directory are immediately reflected in the displayed sticky
+     notes.  To	 create	 new notes, simply create a file in this directory. To
+     delete notes, either use your window manager to close them, or delete the
+     corresponding  note  file.	 And to modify the content or appearance of an
+     existing  note,  simply  edit  the	 corresponding	text  file  with  your
+     favourite text editor.
+
+     xnots will exit only when the watched directory is deleted / moved, or it
+     receives a TERM signal (e.g. via `pkill -n xnots').
+
+     NOTE: Files in the watched directory beginning with a period,  or	ending
+     with `~' or `.swp' are ignored.
+
+OPTIONS
+     -q	   Do not display anything on stdout (except for X errors).
+
+     dir   Directory  to  look for note files in (default ~/xnots).  This must
+	   be the first argument (except possibly for the -q option).
+
+     file  File to read default note options from (default ~/.xnotsrc).	  This
+	   must appear immediately after the dir option.
+
+NOTE FILE SYNTAX
+     The typical note file looks like this
+
+	 * background	 : #204040
+	 * geometry	 : 150x150-0+0
+
+	 Super important memo goes here. <b>This will be bold</b>
+
+     The first few lines that have a `*' in the first collumn are options that
+     modify the appearance of the sticky note.	Once  a	 (non-blank)  line  is
+     encountered  without  a `*' in the first column, that line and everything
+     following is treated as the text of the sticky note.
+
+     The text of the sticky note can contain simple markup tags	 as  supported
+     by	 the pango library. See the file pango-Text-Attributes.html that comes
+     with the pango documentation for a list and  description  of  all	markup
+     tags  supported.  Keep in mind that even minor errors in your markup will
+     cause the pango library to complain verbosely, and not render any	markup
+     at	 all for your note. You can disable the use of markup in the note text
+     using the useMarkup option.
+
+     The following options can be used	to  control  the  appearance  of  your
+     sticky   notes.  If  these	 options  appear  in  the  configuration  file
+     ~/.xnotsrc then they apply to all notes. Otherwise they will  only	 apply
+     to the current note.
+
+     display dpy
+	   X display to connect to (this only works from the ~/.xnotsrc file)
+
+     geometry geom
+	   The	geometry of the note as understood by the XParseGeometry(3X11)
+	   function
+
+     foreground color
+	   The color of the note text.
+
+     background color
+	   The color of the note background.
+
+     alpha degree
+	   The transparency degree of the note. 0 is fully transparent, 255 is
+	   completely  opaque.	The  note  is  made  `root-transparent' and is
+	   tinted to the color specified by the background option  with	 alpha
+	   degree.
+
+	   The	note can only be made root-transparent if you used an esetroot
+	   compatible program to  set  the  desktop  wallpaper.	 For  instance
+	   feh(1)  or  fvwm-root(1)  with the -r option will do this. See also
+	   the comments about transparency in the man page of  mrxvt(1)	 since
+	   the	transparency  code is almost identical to mrxvt's transparency
+	   code.
+
+     bypassWM [bool]
+	   If bool is true, then the OverrideRedirect flag is set when	creat-
+	   ing	note  windows. This means that window managers will completely
+	   ignore this window (not decorate it, not pass it focus  put	it  in
+	   task	 bars  or  pagers).  Also the X server generally preserves the
+	   contents of such windows, when you expose parts or all of your note
+	   window, you'll find that your sticky notes take less time to redraw
+	   themselves.
+
+	   When this option is unset, xnots tries very hard to tell your  win-
+	   dow manager to make your sticky notes skip your pager / taskbar and
+	   appear undecorated on all desktops. However some  window  managers,
+	   like	 fvwm(1),  do not honor all such requests. If you use fvwm for
+	   instance, and your sticky notes to not have window decorations then
+	   you	can  either set the bypassWM option, or put the following line
+	   in your fvwm configuration file:
+
+	       Style XNots NoTitle, !Borders, WindowListSkip
+
+     onTop bool
+	   If true your sticky notes are above other windows, instead of being
+	   below them.
+
+     opTitle title
+	   The window of your note window
+
+     useMarkup bool
+	   If  true,  basic markup tags are accepted in the note text. See the
+	   file pango-Text-Attributes.html that comes with the pango  documen-
+	   tation for a list and description of all markup tags supported.
+
+     font fontname
+	   The	name  of  the  Xft  font to be used to render your sticky note
+	   text.
+
+     size size
+	   The point size of the font to be used to render  your  sticky  note
+	   text.
+
+     leftMargin margin
+	   Left margin of note text
+
+     rightMargin margin
+	   Right margin of note text
+
+     topMargin margin
+	   Top margin of note text
+
+     botMargin margin
+	   This	 works	differently  from the other margins. If non-zero, then
+	   the height of the note window is adjusted  so  that	the  note  has
+	   exactly  the	 specified margin at the bottom. If 0, then the height
+	   of the sticky note window is exactly as specified by	 the  geometry
+	   option.
+
+     indent width
+	   Set's  the indentation of the first line of each paragraph. Hanging
+	   indents can be produced by setting this to  a  negative  value.  In
+	   this	 case  the  first tab stop will be exactly equal to the (abso-
+	   lute) value of the indent, so that the  first  tab  character  will
+	   skip the hanging indent.
+
+EXAMPLES
+     See  the files in the examples/ subdirectory of the xnots source archive.
+
+NOTES
+     - You need a Linux kernel with inotify compiled with inotify support  for
+       xnots  to  work.	 I think inotify is included by default with the Linux
+       2.6.13 upward, but I recommend using 2.6.16 and up.
+
+     - Sometimes xnots does not detect when the watched directory  is  deleted
+       (but it generally detects when the watched directory is moved).
+
+FILES
+     ~/.xnotsrc
+	   Default note options are read from this file on startup.
+
+     ~/.xnots
+	   Default directory to look for sticky note files.
+
+BUGS
+     -	Deleting  options  from a displayed note does not reset to the default
+       value. Maybe this is how it should be :)
+     - The useMarkup and bypassWM  options  work  badly	 when  changed	for  a
+       already displayed note.
+
+SEE ALSO
+     The  pango text markup attributes pango-Text-Attributes.html, inotify(7).
+
+			   http://xnots.sourceforge.net
+
+AUTHOR
+     Gautam Iyer <gi1242@users.sourceforge.net>
+
+X Version 11		       January 10, 2006			  X Version 11
