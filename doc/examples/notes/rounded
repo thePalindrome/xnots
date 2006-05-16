@@ -1,0 +1,4 @@
+* background	: #804000
+* roundRadius	: 12
+
+Notes can have rounded corners! Just set the <i>roundRadius</i> option to the radius of the corners of the note. If you set this option to 0, then notes will be regular rectangles.
