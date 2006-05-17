@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------- #
 #
 # Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-# Modified	: Sat 06 May 2006 11:44:14 PM CDT
+# Modified	: Tue 16 May 2006 09:14:20 PM CDT
 # Author	: Gautam Iyer <gi1242@users.sourceforge.net>
 # Licence	: GPL2
 #
@@ -21,9 +21,14 @@ CC		= gcc
 #
 # Compile flags
 #
-override CFLAGS		+= $(shell pkg-config pangoxft xrender --cflags) -Wall
-override LDLIBS		+= $(shell pkg-config pangoxft xrender --libs)
-override CXXFLAGS	 = $(CFLAGS)
+ifeq ($(VERSION),)
+    # Get the version from Makefile in the parent directory
+    VERSION	= $(shell perl -ne 'print $$1 if( m/^VERSION\s*\=\s*(.*)$$/ )' < ../Makefile)
+endif
+CFLAGS		+= -DVERSION=\"$(VERSION)\" -Wall
+CFLAGS		+= $(shell pkg-config pangoxft xrender --cflags)
+LDLIBS		+= $(shell pkg-config pangoxft xrender --libs)
+CXXFLAGS	 = $(CFLAGS)
 
 #
 # Make rules

@@ -1,6 +1,6 @@
 .
 .
-.Dd January 10, 2006
+.Dd May 16, 2006
 .Os X "Version 11"
 .Dt xnots 1
 .
@@ -13,8 +13,9 @@
 .
 .Sh SYNOPSIS
 .Nm
-.Op Fl q
-.Op Ar dir Op Ar file
+.Op Fl hqv
+.Op Fl c Ar file
+.Op Fl d Ar dir
 .
 .
 .Sh DESCRIPTION
@@ -35,23 +36,25 @@ On startup
 .Nm
 first reads options from the file
 .Pa ~/.xnotsrc ,
-or the file
-.Ar file
-supplied on the command line. Then
+or the file specified by the
+.Fl c
+option. Then
 .Nm
 reads the file
 .Pa .xnotsinfo
 in the directory
 .Pa ~/.xnots
 (or the directory
-.Ar dir
-supplied on the command line). This file contains the position / sizes of sticky notes saved from previous sessions. Finally,
+specified by the
+.Fl d
+option). This file contains the position / sizes of sticky notes saved from previous sessions. Finally,
 .Nm
 displays all files found in the directory
 .Pa ~/.xnots
 (or the directory
-.Ar dir
-supplied on the command line) as sticky notes.
+specified by the
+.Fl d
+option) as sticky notes.
 .Pp
 .
 .Nm
@@ -87,22 +90,28 @@ are ignored.
 .
 .Bd -filled
 .Bl -tag -width 4n
-.It Fl q
-Do not display anything on stdout (except for X errors).
 .
-.It Ar dir
-Directory to look for note files in (default
-.Pa ~/xnots ) .
-This must be the first argument (except possibly for the
-.Fl q
-option).
+.It Fl c Ar file
+Read default note options from
+.Ar file
+instead of from
+.Pa ~/.xnotsrc .
 .
-.It Ar file
-File to read default note options from (default
-.Pa ~/.xnotsrc ) .
-This must appear immediately after the
+.It Fl d Ar dir
+Read notes from directory
 .Ar dir
-option.
+instead of from
+.Pa ~/xnots .
+.
+.It Fl h
+Display brief help message
+.
+.It Fl q
+Do not display any messages (except for X errors).
+.
+.It Fl v
+Display version information and exit.
+.
 .El
 .Ed
 .

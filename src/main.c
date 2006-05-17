@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Sun 14 May 2006 02:35:33 AM CDT
+  Modified	: Tue 16 May 2006 10:59:20 PM CDT
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
@@ -209,68 +209,93 @@ termSignalHandler( int signum )
 }
 
 
-int
-main( int argc, char **argv )
+/*
+  Process command line options and call initXnots() to initialize global xnots
+  structure.
+*/
+void
+processOptions( int argc, char **argv )
 {
-    char		text[1024];
-    int	 		nbytes, i;
+    char		*homedir = getenv( "HOME" );
+    char		config_file[PATH_MAX],
+			notes_dir[PATH_MAX];
+    char		opt;
 
+    char		text[1024];
     unsigned long	flags, flagsMask;
     char		*options[NOPTIONS];
+    int			nbytes;
 
-    struct dirent	**namelist;
-    int			nfiles;
-
-    char		fname[PATH_MAX];
-    char		*homedir = getenv( "HOME" );
-
-    /*
-      When bash is killed, then it sends HUP to all child processes. If we
-      ignore HUP, then we will not be killed by bash on HUP signals
-    */
-    signal( SIGHUP, SIG_IGN );
-
-    /*
-      We'll run till we receive a SIGTERM signal. Gracefully exit on SIGTERM
-    */
-    signal( SIGINT , termSignalHandler );
-    signal( SIGTERM, termSignalHandler );
-    signal( SIGQUIT, termSignalHandler );
-
-    if( argc > 1 && !strcmp( argv[1], "-q" ) )
-    {
-	/* Be quite about displaying status messages */
-	xnots.verbose = 0;
-	
-	/* Shift arguments */
-	argc--;
-	argv++;
-    }
-    else
-	xnots.verbose = 1;
+    int			i;
 
     /* Get home directory from environment. */
     if( homedir == NULL )
 	homedir = ".";
-    
-    /* Initialize the options array to NULL's before first use */
+
+    /*
+      Initialize option defaults
+    */
+    xnots.verbose = 1;
+    sprintf( config_file, "%s/.xnotsrc", homedir );
+    sprintf( notes_dir, "%s/.xnots", homedir );
+
+    /*
+      Process command line options.
+    */
+    while( (opt = getopt( argc, argv, "c:d:qhv" )) != -1 )
+    {
+	switch( opt )
+	{
+	    case 'q':
+		/* Be quite about displaying status messages */
+		xnots.verbose = 0;
+		break;
+
+	    case 'c':
+		/* Config file */
+		strcpy( config_file, optarg );
+		break;
+
+	    case 'd':
+		strcpy( notes_dir, optarg );
+		break;
+
+	    case '?':
+	    case 'h':
+	    case 'v':
+	    default:
+		/* Print version */
+		fprintf( stderr, "xNots-" VERSION ". (c) 2006 Gautam Iyer\n" );
+
+		if( opt == 'v' )
+		    exit(0);
+
+		/* Print help */
+		fprintf( stderr, "\n\
+SYNOPSIS\n\
+    xnots [-hqv] [-c file] [-d dir]\n\
+\n\
+OPTIONS\n\
+    -c file	Use file as the config file (instead of ~/.xnotsrc).\n\
+    -d dir	Look for notes in dir (instead of ~/.xnots).\n\
+    -h		Print this help.\n\
+    -q		Suppress all status messages.\n\
+    -v		Print version info and exit.\n" );
+
+		/* Exit */
+		exit( opt == 'h' ? 0 : 1 );
+	}
+    }
+
+    /* Read options from config file */
     for( i=0; i < NOPTIONS; i++)
 	options[i] = NULL;
 
-    /* Get config file name in fname (either second argument, or ~/.xnotsrc) */
-    if( argc == 3 )
-	strcpy( fname, argv[2] );
-    else
-	sprintf( fname, "%s/.xnotsrc", homedir );
-
-    /* Read options from config file */
     nbytes = readOptionsFromFile( options, &flags, &flagsMask, text, 1024,
-	    fname);
+				    config_file);
 
     /* Initialize  the global xnots_t structure. */
     initXnots( options, flags, text );
-    freeOptions( options );		/* Not needed any longer */
-
 
 #if 0 /* Debug info */
     for( i=0; i < NOPTIONS; i++)
@@ -282,14 +307,22 @@ main( int argc, char **argv )
     fprintf( stderr, "Read %d bytes:\n%.*sEOF\n", nbytes, nbytes, text );
 #endif
 
-    /* Get the directory where all notes are */
-    if( argc > 1 )
-	strcpy( fname, argv[1] );
-    else
-	sprintf( fname, "%s/.xnots", homedir );
+    freeOptions( options );		/* Not needed any longer */
 
-    if( chdir( fname ) == -1 )
-	fatalError( "Could not change to directory %s", fname );
+    if( chdir( notes_dir ) == -1 )
+	fatalError( "Could not change to directory %s", notes_dir );
+}
+
+int
+main( int argc, char **argv )
+{
+    int	 		i;
+
+    struct dirent	**namelist;
+    int			nfiles;
+
+    /* Process command line options and initialize xnots */
+    processOptions( argc, argv );
 
     /* Read saved note geometries */
     readGeometryList();
@@ -321,8 +354,20 @@ main( int argc, char **argv )
     showNotes();
 
     if( xnots.nNotes == 0 )
-	infoMessage( "No notes found. Polling directory %s for changes...",
-		fname );
+	infoMessage( "No notes found. Polling for changes." );
+
+    /*
+      When bash is killed, then it sends HUP to all child processes. If we
+      ignore HUP, then we will not be killed by bash on HUP signals
+    */
+    signal( SIGHUP, SIG_IGN );
+
+    /*
+      We'll run till we receive a SIGTERM signal. Gracefully exit on SIGTERM
+    */
+    signal( SIGINT , termSignalHandler );
+    signal( SIGTERM, termSignalHandler );
+    signal( SIGQUIT, termSignalHandler );
 
     /* Loop until it's time to exit. */
     mainLoop();
