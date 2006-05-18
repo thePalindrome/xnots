@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------- #
 #
 # Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-# Modified	: Tue 16 May 2006 07:37:00 PM CDT
+# Modified	: Wed 17 May 2006 10:39:13 PM CDT
 # Author	: Gautam Iyer <gi1242@users.sourceforge.net>
 # Licence	: GPL2
 #
@@ -31,7 +31,6 @@ dist_etc	= etc/
 # Directory variables
 #
 prefix		= /usr/local
-exec_prefix	= $(prefix)
 bindir		= $(prefix)/bin
 mandir		= $(prefix)/man
 man1dir		= $(mandir)/man1
