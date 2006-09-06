@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------- #
 #
 # Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-# Modified	: Tue 16 May 2006 09:14:20 PM CDT
+# Modified	: Wed 06 Sep 2006 01:24:12 PM PDT
 # Author	: Gautam Iyer <gi1242@users.sourceforge.net>
 # Licence	: GPL2
 #
@@ -28,6 +28,7 @@ endif
 CFLAGS		+= -DVERSION=\"$(VERSION)\" -Wall
 CFLAGS		+= $(shell pkg-config pangoxft xrender --cflags)
 LDLIBS		+= $(shell pkg-config pangoxft xrender --libs)
+LDLIBS		+= $(shell pkg-config xext --silence-errors --libs)
 CXXFLAGS	 = $(CFLAGS)
 
 #
