@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------- #
 #
 # Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-# Modified	: Wed 06 Sep 2006 07:02:04 PM PDT
+# Modified	: Wed 27 Dec 2006 12:46:34 AM PST
 # Author	: Gautam Iyer <gi1242@users.sourceforge.net>
 # Licence	: GPL2
 #
@@ -32,9 +32,9 @@ dist_etc	= etc/
 #
 prefix		= /usr/local
 bindir		= $(prefix)/bin
-mandir		= $(prefix)/man
-man1dir		= $(mandir)/man1
 datadir		= $(prefix)/share
+mandir		= $(datadir)/man
+man1dir		= $(mandir)/man1
 docdir		= $(datadir)/doc/xnots-$(VERSION)
 
 #
