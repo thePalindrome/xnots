@@ -1,14 +1,13 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Wed 26 Sep 2007 09:32:44 AM PDT
+  Modified	: Wed 26 Mar 2008 11:54:32 AM PDT
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
 \* -------------------------------------------------------------------------- */
 
 #include "xnots.h"
-#include <assert.h>
 #include <ctype.h>
 
 #define LDEBUG_LEVEL DEBUG_LEVEL

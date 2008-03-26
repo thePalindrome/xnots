@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Sat 13 May 2006 01:58:21 AM CDT
+  Modified	: Wed 26 Mar 2008 11:54:22 AM PDT
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
@@ -361,11 +361,8 @@ int		getGeometryFromList	( Note *note );
 
 \* -------------------------------------------------------------------------- */
 
-#define DEBUG_LEVEL	0
-
 #define TTRACE( d, x ) fprintf x
 
-#define NDEBUG
 #include <assert.h>
 
 
@@ -416,7 +413,7 @@ int		getGeometryFromList	( Note *note );
     flags ^= (1LU << opt )
 
 /*
-  Convinience macros
+  Convenience macros
 */
 
 #define DPY		(xnots.dpy)

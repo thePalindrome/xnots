@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Sat 13 May 2006 05:24:06 PM CDT
+  Modified	: Wed 26 Mar 2008 11:57:05 AM PDT
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
@@ -809,9 +809,11 @@ initWindowAttrs( Note *note )
 	if( winName != NULL )
 	{
 	    XChangeProperty( DPY, note->win, XA_WM_NAME, XA_STRING, 8,
-		    PropModeReplace, winName, strlen( winName ) );
+		    PropModeReplace, (unsigned char*) winName,
+		    strlen( winName ) );
 	    XChangeProperty( DPY, note->win, XA_WM_ICON_NAME, XA_STRING, 8,
-		    PropModeReplace, winName, strlen( winName ) );
+		    PropModeReplace, (unsigned char*) winName,
+		    strlen( winName ) );
 	}
     }
 

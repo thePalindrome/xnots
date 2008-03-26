@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------- #
 #
 # Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-# Modified	: Wed 26 Sep 2007 09:35:27 AM PDT
+# Modified	: Wed 26 Mar 2008 12:15:05 PM PDT
 # Author	: Gautam Iyer <gi1242@users.sourceforge.net>
 # Licence	: GPL2
 #
@@ -25,7 +25,14 @@ ifeq ($(VERSION),)
     # Get the version from Makefile in the parent directory
     VERSION	= $(shell perl -ne 'print $$1 if( m/^VERSION\s*\=\s*(.*)$$/ )' < ../Makefile)
 endif
-CFLAGS += -O2
+
+ifdef NO_DEBUG
+    CFLAGS += -DNDEBUG -DDEBUG_LEVEL=0
+else
+    CFLAGS += -DDEBUG_LEVEL=1 -g
+endif
+
+CFLAGS		+= -fno-strict-aliasing
 CFLAGS		+= -DVERSION=\"$(VERSION)\" -Wall
 CFLAGS		+= $(shell pkg-config pangoxft xrender --cflags)
 LDLIBS		+= $(shell pkg-config pangoxft xrender --libs)
