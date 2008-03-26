@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Tue 16 May 2006 10:59:20 PM CDT
+  Modified	: Wed 26 Sep 2007 09:49:06 AM PDT
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
@@ -906,7 +906,12 @@ processClientMessage( int noteNum, XClientMessageEvent *ev )
 	freeNote( NOTES[noteNum] );
 	delItemNumFromList( (void ***) &NOTES, noteNum,
 				&xnots.nNotes, &xnots.nNotesMax);
+
+	/* If the last note was deleted, exit */
+	if( xnots.nNotes == 0 )
+	    xnots.terminate = 1;
     }
+
 }
 
 
