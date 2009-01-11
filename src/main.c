@@ -1,13 +1,14 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Wed 26 Sep 2007 09:49:06 AM PDT
+  Modified	: Sun 11 Jan 2009 12:36:10 PM PST
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
 \* -------------------------------------------------------------------------- */
 
 #include "xnots.h"
+#include <X11/extensions/Xrandr.h>
 
 #include "inotify.h"
 #include "inotify-syscalls.h"
@@ -797,9 +798,80 @@ processXEvent()
 
     TRACE( 3, (stderr, "Got XEvent %s\n", xEventName[ev.type] ) );
 
-    if( ev.type == PropertyNotify )
+    /* Process events on the root window first */
+    if( ev.xany.window == XROOT )
     {
-	processPropertyNotify( (XPropertyEvent*) &ev );
+	if( ev.type == PropertyNotify )
+	    processPropertyNotify( (XPropertyEvent*) &ev );
+
+	else if( ev.type == ConfigureNotify )
+	{
+	    /* Dimensions changed via randr, so notify Xlib. */
+	    int oldrWidth = DisplayWidth( DPY, SCREEN ),
+		oldrHeight = DisplayHeight( DPY, SCREEN );
+
+	    if( XRRUpdateConfiguration( &ev ) )
+	    {
+		/*
+		  After calling XRRUpdateConfiguration(), calls to DisplayWidth
+		  or DisplayHeight() should return the new screen dimensions.
+		 */
+		int newrWidth = DisplayWidth( DPY, SCREEN ),
+		    newrHeight = DisplayHeight( DPY, SCREEN );
+
+		if( newrWidth != oldrWidth || newrHeight != oldrHeight )
+		{
+		    /*
+		      Move notes keeping the center in the same relative
+		      position.
+		     */
+		    int i;
+
+		    TRACE( 3, (stderr,
+				"Old geom %dx%d. New %dx%d. Moving notes\n",
+				oldrWidth, oldrHeight, newrWidth, newrHeight));
+
+		    for( i=0; i < xnots.nNotes; i++ )
+		    {
+			Note *n = NOTES[i];
+
+			if( ISSET_FLAG( n->flags, flMoveOnScreenResize ) )
+			{
+			    int newx, newy;
+			    int xc = n->x + n->width/2,
+				yc = n->y + n->height/2;
+
+			    if( xc == oldrWidth/2 )
+				newx = (newrWidth - n->width)/2;
+			    else
+				newx = (xc > oldrWidth/2) ?
+				    (n->x + n->width) * newrWidth/oldrWidth
+					- n->width :
+				    n->x * newrWidth/oldrWidth;
+
+			    if( yc == oldrHeight/2 )
+				newy = (newrHeight - n->height)/2;
+			    else
+				newy = (yc > oldrHeight/2) ?
+				    (n->y + n->height) * newrHeight/oldrHeight
+					- n->height :
+				    n->y * newrHeight/oldrHeight;
+
+			    TRACE( 3, ( stderr, "Note %d: Old %ux%u+%d+%d, "
+					    "New %ux%u+%d+%d.\n", i,
+					    n->width, n->height, n->x, n->y,
+					    n->width, n->height, newx, newy
+				       ));
+			    XMoveWindow( DPY, n->win, newx, newy );
+			}
+		    }
+		} /* if( newrWidth != oldrWidth ... ) */
+	    } /* if( XRRUpdateConfiguration() ) */
+	    else
+	    {
+		TRACE( 2, (stderr, "XRRUpdateConfiguration() failed"));
+	    }
+	}
 	return;
     }
 

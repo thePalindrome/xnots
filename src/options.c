@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Wed 26 Mar 2008 11:54:32 AM PDT
+  Modified	: Sun 11 Jan 2009 11:40:04 AM PST
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
@@ -75,6 +75,11 @@ OData userOption[] =
     OPTION( opTitle,	   "t",	  "title",	 "Note window title" ),
 
     FLAG( flMarkup,	   "um",  "useMarkup",	 "Use pango markup in note" ),
+    FLAG( flMoveOnScreenResize,
+			   "m",	  "moveOnScreenResize",
+						 "Move note if screen is "
+						 "resized, keeping the relative"
+						 " position the same" ),
 
     OPTION( opFont,	   "fn",  "font",	 "Font face to use" ),
     OPTION( opFontSize,	   "sz",  "size",	 "Font size to use" ),

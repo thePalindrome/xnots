@@ -1,6 +1,6 @@
 .
 .
-.Dd May 16, 2006
+.Dd January 11, 2009
 .Os X "Version 11"
 .Dt xnots 1
 .
@@ -226,6 +226,11 @@ Style XNots NoTitle, !Borders, WindowListSkip
 .
 .It Ic onTop Ar bool
 If true your sticky notes are above other windows, instead of being below them.
+.
+.It Ic moveOnScreenResize Ar bool
+If true (default), then the note's position is updated when the desktop is resized (e.g. via
+.Xr xrandr 3 )
+to keep the notes relative position on screen constant. (The note is only moved, not resized.)
 .
 .It Ic title Ar title
 The window of your note window

@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Wed 26 Mar 2008 11:57:05 AM PDT
+  Modified	: Sun 11 Jan 2009 10:37:43 AM PST
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
@@ -115,7 +115,7 @@ initXnots( char **options, unsigned long flags, char *text )
     xnots.terminate	= 0;
 
     /* Watch for root background changes */
-    XSelectInput( DPY, XROOT, PropertyChangeMask );
+    XSelectInput( DPY, XROOT, PropertyChangeMask|StructureNotifyMask );
 
     /* Setup root background info */
     refreshRootBGVars();

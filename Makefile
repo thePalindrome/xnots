@@ -1,13 +1,13 @@
 # ---------------------------------------------------------------------------- #
 #
 # Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-# Modified	: Wed 26 Mar 2008 12:34:23 PM PDT
+# Modified	: Sun 11 Jan 2009 11:54:32 AM PST
 # Author	: Gautam Iyer <gi1242@users.sourceforge.net>
 # Licence	: GPL2
 #
 # ---------------------------------------------------------------------------- #
 
-VERSION		= 0.2
+VERSION		= 0.2.1
 
 #
 # Files installed by this package
@@ -76,6 +76,6 @@ dist: $(dist_sources) $(dist_docs) $(dist_mans) $(dist_extras)		    \
 	&& cp $(dist_sources) $$distdir/src				    \
 	&& cp -R $(dist_mans) $(dist_docs) $$distdir/doc		    \
 	&& cp $(dist_extras) $(dist_makefile) $$distdir/		    \
-	&& cp -R $(dist_etc) $$distdir/doc				    \
+	&& cp -R $(dist_etc) $$distdir/				    	    \
 	&& tar --exclude .svn -c $$distdir | gzip -9 > $$distdir.tar.gz	    \
 	&& rm -rf $$distdir

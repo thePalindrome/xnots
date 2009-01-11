@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Wed 26 Mar 2008 11:54:22 AM PDT
+  Modified	: Sun 11 Jan 2009 11:42:47 AM PST
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
@@ -67,10 +67,11 @@ enum {
     flMarkup = 0,
     flOverrideRedir,
     flOntop,
+    flMoveOnScreenResize,
     NFLAGS
 };
 
-#define DEFAULT_FLAGS	(1ul << flMarkup)
+#define DEFAULT_FLAGS	( (1ul << flMarkup)|(1ul<<flMoveOnScreenResize) )
 
 
 /* -------------------------------------------------------------------------- *\
