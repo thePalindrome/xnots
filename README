@@ -17,7 +17,7 @@ REQUIREMENTS
 
 DEPENDENCIES
 
-    0. Xorg / X11 with the Xft and XRender extensions.
+    0. Xorg / X11 with Xft, Xrandr and XRender extensions.
     1. pango: http://www.pango.org. This must be compiled with Xft support.
     2. inotify kernel support. This is in by default in kernels 2.6.13 and up.
 
@@ -57,5 +57,5 @@ you implement it, send me a patch.
 
 Author		: Gautam Iyer <gi1242@users.sourceforge.net>
 Created		: Sat 15 Apr 2006 03:01:43 PM CDT
-Modified	: Wed 26 Mar 2008 12:12:16 PM PDT
+Modified	: Sun 11 Jan 2009 02:43:54 PM PST
 
