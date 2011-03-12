@@ -4,44 +4,79 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
     <meta name="Author" content="Gautam Iyer" />
-    <link rel="stylesheet" type="text/css" href="default.css" />
+    <link rel="stylesheet" type="text/css" href="2column.css" />
+    <script type='text/javascript' src='modalPopup.js'></script>
 
     <title>xNots: A desktop sticky notes application for Unix geeks.</title>
   </head>
 
   <body>
-    <h1>xNots: A desktop sticky notes application for Unix geeks.</h1>
+    <h1 class='first'>xNots: A desktop sticky notes application for Unix geeks.</h1>
 
-    <p><b>xNots</b>is a desktop sticky note system for the X window system and Unix geeks. <b>xNots</b> is designed so that all your sticky notes and to-do lists are text files in a certain directory (by default <span class="filename">.Pa ~/.xnots</span>). The idea is that any Unix geek should abhor typing text into anything EXCEPT his favourite editor. These files completely control the appearance and content of the displayed sticky notes, and thus the average Unix geek will never have to use the mouse or (god forbid) navigate using menus to control.</p>
+    <div class='left'>
+      <div class='box'>
+	<h5 class='first'>Description</h5>
+	<p>
+	  <b>xNots</b> is a desktop sticky note system for the X window system
+	  and Unix geeks. <b>xNots</b> is designed so that all your sticky
+	  notes and to-do lists are text files in a certain directory (by
+	  default <span class="filename">.Pa ~/.xnots</span>). The idea is that
+	  any Unix geek should abhor typing text into anything EXCEPT his
+	  favourite editor. These files completely control the appearance and
+	  content of the displayed sticky notes, and thus the average Unix geek
+	  will never have to use the mouse or (god forbid) navigate using menus
+	  to control.
+	</p>
+      </div>
 
-    <h2>Screenshots</h2>
-    <a href='screenshot1.png'><img src='thumbnail1.png' /></a>
-    <a href='screenshot2.png'><img src='thumbnail2.png' /></a>
+      <div class='box'>
+	<h5 class='first'>Download</h5>
 
-    <h2>Documentation</h2>
-    <ul>
-      <li>Manual page: <a href='xnots.1.txt'>xnots.1.txt</a></li>
-      <li>Install instructions etc. <a href='README'>README</a></li>
-    </ul>
-
-    <h2>Download</h2>
-    <p>
-      You can download the latest release at <a href="http://sourceforge.net/project/showfiles.php?group_id=166669">http://sourceforge.net/project/showfiles.php?group_id=166669</a>. Preferably you can download the latest release via subversion by typing
+	<ul>
+	  <li><a href="http://sourceforge.net/project/showfiles.php?group_id=166669">Latest release</a></li>
+	  <li>
+	    <a rel='modalPopup.open'>SVN checkout instructions</a>
+	    <div class='helpPopup'>
+	      <h5 class='first'>SVN checkout instructions.</h5>
+	      To check out a particular release from SVN, use the command
 <pre>
-    svn checkout https://svn.sourceforge.net/svnroot/xnots/tags/release-X.X xNots
+    svn checkout https://xnots.svn.sourceforge.net/svnroot/xnots/tags/release-X.X xNots
 </pre>
-      (Here X.X is the current release number). Alternately, you can download the latest (possibly unstable) version via subversion by typing
+	      Here X.X is the current release number. You can also checkout the latest (possibly unstable) version via subversion using
 <pre>
-    svn checkout https://svn.sourceforge.net/svnroot/xnots/trunk xNots
+    svn checkout https://xnots.svn.sourceforge.net/svnroot/xnots/trunk xNots
 </pre>
-    </p>
+	    </div>
+	  </li>
+	  <li><a href='http://xnots.svn.sourceforge.net/viewvc/xnots/'>Browse code online</a></li>
+	  <li><a href='https://sourceforge.net/projects/xnots/'>Sourceforge project page</a></li>
+	</ul>
+      </div>
+    </div>
 
-    <div class="Signature">
-      Questions? Comments? Send me hate mail? <a href="mailto:gi1242@users.sourceforge.net">gi1242@users.sourceforge.net</a>. Public Key <a href="public_key.txt">03C4B6C8</a><br />
+    <div class='right'>
+      <div class='box'>
+	<h5 class='first'>Screenshots</h5>
+	<a href='screenshot1.png'><img src='thumbnail1.png' alt='Screenshot thumbnail' /></a>
+	<a href='screenshot2.png'><img src='thumbnail2.png' alt='Screenshot thumbnail' /></a>
+      </div>
+
+      <div class='box'>
+	<h5 class='first'>Documentation</h5>
+	<ul>
+	  <li>Manual page: <a href='xnots.1.txt'>xnots.1.txt</a></li>
+	  <li>Install instructions etc. <a href='README'>README</a></li>
+	</ul>
+      </div>
+
+    </div>
+
+    <div class="timestamp" style='margin-top: 10em'>
+      Email <span class='linklike'>gi1242+xnots@NoSPAM.com</span> (replace <i>NoSPAM</i> with <i>gmail</i>). Public Key <a href="public_key.txt">03C4B6C8</a><br />
       <hr />
       <a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=166669&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" align="right" /></a>
-      <span class="Quote">Linux. Because a PC is beautiful thing to waste.</span><br />
-      <p class="Timestamp">Last Modified: Tue 16 May 2006 10:27:40 AM CDT</p>
+      <i>Linux. Because a PC is beautiful thing to waste.</i><br />
+      Last Modified: Sat 12 Mar 2011 02:52:54 PM EST
     </div>
   </body>
 </html>
