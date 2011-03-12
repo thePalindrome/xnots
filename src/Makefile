@@ -22,7 +22,7 @@ CC		= gcc
 #
 ifeq ($(VERSION),)
     # Get the version from Makefile in the parent directory
-    VERSION	= $(shell perl -ne 'print $$1 if( m/^VERSION\s*\=\s*(.*)$$/ )' < ../Makefile)
+    VERSION	= $(shell sed -n '/^VERSION/{s/^.*= //p;q}' ../Makefile)
 endif
 
 ifdef NO_DEBUG
