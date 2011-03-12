@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- *\
 
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Sun 11 Jan 2009 11:40:04 AM PST
+  Modified	: Sat 12 Mar 2011 01:21:51 AM EST
   Author	: Gautam Iyer <gi1242@users.sourceforge.net>
   Licence	: GPL2
 
@@ -227,8 +227,16 @@ processOption( char **options,
 	    arg = p;
 	}
 
-	rtrimSpaces( opt );
-	rtrimSpaces( arg );
+	if( opt && arg )
+	{
+	    rtrimSpaces( opt );
+	    rtrimSpaces( arg );
+	}
+	else
+	{
+	    errorMessage( "Option string '%s' --- expected ':'", opt );
+	    return 0;
+	}
     }
     else if ( ( *opt == '-' || *opt == '+' ) && arg == NULL )
     {
