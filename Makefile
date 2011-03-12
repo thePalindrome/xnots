@@ -53,6 +53,10 @@ INSTALL_DATA	= ${INSTALL} -m 644
 xnots:
 	cd src && $(MAKE)
 
+.PHONY: clean
+clean:
+	$(MAKE) -C src clean
+
 .PHONY: install-strip
 install-strip:
 	$(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' install
