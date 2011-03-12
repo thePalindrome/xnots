@@ -11,7 +11,6 @@
 # Source files
 #
 headers 	= xnots.h
-extheaders	= inotify.h inotify-syscalls.h
 sources		= background.c list.c main.c notes.c options.c savegeom.c
 
 objects		= $(sources:.c=.o)
@@ -58,7 +57,7 @@ buildall: clean xnots
 #
 background.o:	$(headers)			background.c
 list.o:		$(headers)			list.c
-main.o:		$(headers) $(extheaders)	main.c
+main.o:		$(headers)			main.c
 notes.o:	$(headers)			notes.c
 options.o:	$(headers)			options.c
 savegeom.o:	$(headers)			savegeom.c

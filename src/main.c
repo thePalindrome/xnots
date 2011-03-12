@@ -10,8 +10,7 @@
 #include "xnots.h"
 #include <X11/extensions/Xrandr.h>
 
-#include "inotify.h"
-#include "inotify-syscalls.h"
+#include <sys/inotify.h>
 
 #include <dirent.h>
 #include <fnmatch.h>
