@@ -1,13 +1,13 @@
 # ---------------------------------------------------------------------------- #
 #
 # Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-# Modified	: Sun 11 Jan 2009 11:54:32 AM PST
+# Modified	: Sat 12 Mar 2011 03:26:05 PM EST
 # Author	: Gautam Iyer <gi1242@users.sourceforge.net>
 # Licence	: GPL2
 #
 # ---------------------------------------------------------------------------- #
 
-VERSION		= 0.2.1
+include config.mk
 
 #
 # Files installed by this package
