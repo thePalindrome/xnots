@@ -1,9 +1,24 @@
 /* -------------------------------------------------------------------------- *\
 
+  Author	: gi1242+xNots@NoSpam.com (replace "NoSpam" with "gmail")
   Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-  Modified	: Sat 12 Mar 2011 01:21:51 AM EST
-  Author	: Gautam Iyer <gi1242@users.sourceforge.net>
-  Licence	: GPL2
+
+  Copyright 2006, 2008 Gautam Iyer
+
+  This file is part of xNots.
+
+  xNots is free software: you can redistribute it and/or modify it under the
+  terms of the GNU General Public License as published by the Free Software
+  Foundation, either version 3 of the License, or (at your option) any later
+  version.
+
+  xNots is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with xNots.  If not, see <http://www.gnu.org/licenses/>.
 
 \* -------------------------------------------------------------------------- */
 
