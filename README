@@ -23,9 +23,10 @@ DEPENDENCIES
 
 INSTALLATION
 
-    Just type make. There is no configure step :)
+    Just type make. There is no configure step :). Edit config.mk for a few
+    features.
 
-	env NO_DEBUG=1 make install
+	env CFLAGS=-O2 make install
 
     Or
 
@@ -57,5 +58,5 @@ you implement it, send me a patch.
 
 Author		: gi1242+xNots@NoSpam.com (replace NoSpam with gmail)
 Created		: Sat 15 Apr 2006 03:01:43 PM CDT
-Modified	: Sat 12 Mar 2011 03:29:49 PM EST
+Modified	: Sat 12 Mar 2011 09:09:26 PM EST
 
