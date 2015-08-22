@@ -1,4 +1,5 @@
 * background	: #606060
+* sticky	: false
 
 <span size='larger' underline='single'>PERSISTENT GEOMETRY</span>
 

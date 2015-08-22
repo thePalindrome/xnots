@@ -224,6 +224,16 @@ option, or put the following line in your fvwm configuration file:
 Style XNots NoTitle, !Borders, WindowListSkip
 .Ed
 .
+.It Ic stickWM Op Ar bool
+If
+.Ar bool
+is true, then all decisions about the sticky nature of a window are left up to the window manager and no hints are sent to make windows sticky.
+When this option is in use, all other hints are sent to the window manager.
+.Pp
+When this option is unset,
+.Nm
+tries very hard to tell your window manager to make your sticky notes sticky to all desktops.
+.
 .It Ic onTop Ar bool
 If true your sticky notes are above other windows, instead of being below them.
 .
