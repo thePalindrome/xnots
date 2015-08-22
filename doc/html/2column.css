@@ -98,6 +98,10 @@ li.deflist { clear: right; }
 }
 .defitemToggleLink {font-size: xx-small; float: right;}
 
+.notice {
+  background-color: #ffff80
+}
+
 .box {
   display: block;
   position: relative;
