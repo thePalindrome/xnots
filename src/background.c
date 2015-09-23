@@ -26,18 +26,6 @@
 
 #include <X11/extensions/Xrender.h>
 
-
-#define LDEBUG_LEVEL DEBUG_LEVEL
-
-#if LDEBUG_LEVEL
-# define	TRACE( d, x )						\
-{									\
-    if( d <= LDEBUG_LEVEL ) fprintf x ;					\
-}
-#else
-# define	TRACE( d, x )
-#endif
-
 /* -------------------------------------------------------------------------- *\
 
 		       FUNCTION PROTOTYPES AND CONSTANTS

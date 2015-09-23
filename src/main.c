@@ -34,17 +34,6 @@
 
 #include <signal.h>
 
-#define LDEBUG_LEVEL DEBUG_LEVEL
-
-#if LDEBUG_LEVEL
-# define	TRACE( d, x )						\
-{									\
-    if( d <= LDEBUG_LEVEL ) fprintf x ;					\
-}
-#else
-# define	TRACE( d, x )
-#endif
-
 
 /* -------------------------------------------------------------------------- *\
 
@@ -566,7 +555,7 @@ mainLoop()
 
 	    if (retval == -1)
 	    {
-#if LDEBUG_LEVEL
+#if DEBUG_LEVEL
 		/* Happens when we recieve signals */
 		perror("select()");
 #endif
@@ -682,7 +671,7 @@ refreshNotes()
 {
     int		i;
 
-#if LDEBUG_LEVEL > 2
+#if DEBUG_LEVEL > 2
     fprintf( stderr, "Need refresh on %s", RLIST.files[0]->filename );
     for( i=1; i < RLIST.nFiles; i++ )
 	fprintf( stderr, ", %s", RLIST.files[i]->filename );
@@ -769,7 +758,7 @@ processXEvent()
 
     XNextEvent( DPY, &ev );
 
-#if LDEBUG_LEVEL >= 1
+#if DEBUG_LEVEL >= 1
     char	*xEventName[] =
     {
 	"Internal",

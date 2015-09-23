@@ -26,18 +26,6 @@
 
 #include <X11/extensions/shape.h>
 
-#define LDEBUG_LEVEL DEBUG_LEVEL
-
-#if LDEBUG_LEVEL
-# define	TRACE( d, x )						\
-{									\
-    if( d <= LDEBUG_LEVEL ) fprintf x ;					\
-}
-#else
-# define	TRACE( d, x )
-#endif
-
-
 /* -------------------------------------------------------------------------- *\
 
 				LOCAL PROTOTYPES
@@ -62,7 +50,7 @@ xnotsXErrorHandler( Display *display, XErrorEvent *event)
 {
     xnots.xErrorReturn = event->error_code;
 
-#if LDEBUG_LEVEL == 0
+#if DEBUG_LEVEL == 0
     /* Only print debug info if x errors are allowed */
     if ( !xnots.allowXErrors )
 #endif

@@ -25,19 +25,6 @@
 #include "xnots.h"
 #include <ctype.h>
 
-#define LDEBUG_LEVEL DEBUG_LEVEL
-
-#if LDEBUG_LEVEL
-# define	TRACE( d, x )						\
-{									\
-    if( d <= LDEBUG_LEVEL ) fprintf x ;					\
-}
-#else
-# define	TRACE( d, x )
-#endif
-
-
-
 /* -------------------------------------------------------------------------- *\
 
 			 LOCAL STRUCTURES AND VARIABLES

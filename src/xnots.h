@@ -377,7 +377,15 @@ int		getGeometryFromList	( Note *note );
 
 \* -------------------------------------------------------------------------- */
 
-#define TTRACE( d, x ) fprintf x
+#if DEBUG_LEVEL
+# define    TRACE( d, x )                       \
+{                                   \
+   if( d <= LDEBUG_LEVEL ) fprintf x ;                 \
+}
+#else
+# define    TRACE( d, x )
+#endif
+
 
 #include <assert.h>
 
