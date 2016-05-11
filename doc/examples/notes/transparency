@@ -1,6 +1,0 @@
-* roundRadius	: 0
-* background	: #306060
-
-<span size='larger' underline='single'>TRANSPARENCY</span>
-
-Sticky notes can be made root transparent. Just set the <i>alpha</i> option to some value between 0 (fully transparent) and 255 (opaque). The note is tinted to the background color with the alpha degree specified.

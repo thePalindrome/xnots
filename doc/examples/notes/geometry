@@ -1,6 +1,0 @@
-* background	: #606060
-* sticky	: false
-
-<span size='larger' underline='single'>PERSISTENT GEOMETRY</span>
-
-The note geometry is &quot;persistent&quot;. Just move / resize the note to the way you like it, and <b>xNots</b> will remember it in future. You can also use the <i>geometry</i> option to control the initial size / position of the note.
