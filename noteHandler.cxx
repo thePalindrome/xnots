@@ -1,4 +1,7 @@
 #include "noteHandler.h"
+extern "C" {
+    #include <mkdio.h>
+}
 
 noteHandler::noteHandler(QDir *notesDir)
 {
@@ -38,9 +41,14 @@ QString *noteHandler::readNote(const QString filename)
         if ( !handlingOptions )
         {
             noteText->append(line);
+            noteText->append("\n");
         }
     }
-    return noteText;
+    char *htmlBuf = 0;
+    MMIOT *doc = mkd_string(qPrintable(*noteText),noteText->length(),0);
+    mkd_compile(doc,0);
+    mkd_document(doc,&htmlBuf);
+    return new QString(htmlBuf);
 }
 
 void noteHandler::scanDir()
@@ -58,7 +66,7 @@ void noteHandler::scanDir()
       }
       else
       {
-	iter.value()->setText(*readNote(iter.key()));
+	iter.value()->setHtml(*readNote(iter.key()));
 	iter++;
       }
     }
@@ -72,10 +80,10 @@ void noteHandler::scanDir()
 	    {
 		continue;
 	    }
-	    textEdit->setText(*readNote(notes.at(i)));
+	    textEdit->setHtml(*readNote(notes.at(i)));
 	    textEdit->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowStaysOnBottomHint | Qt::WindowCloseButtonHint | Qt::Tool);
 	    textEdit->show();
-            windows->insert(notes.at(i), textEdit);
+        windows->insert(notes.at(i), textEdit);
 	}
     }
 }
