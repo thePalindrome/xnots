@@ -11,6 +11,11 @@ noteHandler::noteHandler(QDir *notesDir)
     timer.start((1000)*10,this);
 }
 
+noteHandler::~noteHandler()
+{
+    delete windows;
+}
+
 void noteHandler::timerEvent(QTimerEvent *event)
 {
     scanDir();
@@ -44,10 +49,13 @@ QString *noteHandler::readNote(const QString filename)
             noteText->append("\n");
         }
     }
+
     char *htmlBuf = 0;
     MMIOT *doc = mkd_string(qPrintable(*noteText),noteText->length(),0);
     mkd_compile(doc,0);
     mkd_document(doc,&htmlBuf);
+    delete noteText;
+    delete file;
     return new QString(htmlBuf);
 }
 
@@ -76,14 +84,16 @@ void noteHandler::scanDir()
         if ( !windows->contains(notes.at(i)) )
         {
 	    QTextEdit *textEdit = new QTextEdit();
-	    if ( readNote(notes.at(i)) == NULL )
+        QString *noteText = readNote(notes.at(i));
+	    if ( noteText == NULL )
 	    {
 		continue;
 	    }
-	    textEdit->setHtml(*readNote(notes.at(i)));
+	    textEdit->setHtml(*noteText);
 	    textEdit->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowStaysOnBottomHint | Qt::WindowCloseButtonHint | Qt::Tool);
 	    textEdit->show();
         windows->insert(notes.at(i), textEdit);
+        delete noteText;
 	}
     }
 }

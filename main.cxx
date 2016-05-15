@@ -23,6 +23,8 @@ int main(int argv, char **args)
     notesDir->setNameFilters(nameFilters);
 
     noteHandler *handler = new noteHandler(notesDir);
-
-    return app.exec();
+    
+    int returnCode = app.exec();
+    delete handler;
+    return returnCode;
 }

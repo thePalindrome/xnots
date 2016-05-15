@@ -14,6 +14,7 @@ class noteHandler : public QObject
 
 public:
     noteHandler(QDir *notesDir);
+    ~noteHandler();
 
 protected:
     void timerEvent(QTimerEvent *event);
