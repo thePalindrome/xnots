@@ -8,6 +8,8 @@ no_markdown {
 }
 
 QT += widgets
+target.path = /usr/local/
+INSTALLS += target
 TEMPLATE = app
 TARGET = xnots
 DEPENDPATH += .
