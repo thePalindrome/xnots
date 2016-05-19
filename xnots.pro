@@ -8,7 +8,7 @@ no_markdown {
 }
 
 TEMPLATE = app
-TARGET = 
+TARGET = xnots
 DEPENDPATH += .
 INCLUDEPATH += .
 #CONFIG += debug
