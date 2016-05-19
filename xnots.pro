@@ -7,6 +7,7 @@ no_markdown {
     SOURCES += noteHandler.cxx
 }
 
+QT += widgets
 TEMPLATE = app
 TARGET = xnots
 DEPENDPATH += .
