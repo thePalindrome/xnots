@@ -228,7 +228,6 @@ processOptions( int argc, char **argv )
     char		text[1024];
     unsigned long	flags, flagsMask;
     char		*options[NOPTIONS];
-    int			nbytes;
 
     int			i;
 
@@ -295,7 +294,7 @@ OPTIONS\n\
     for( i=0; i < NOPTIONS; i++)
 	options[i] = NULL;
 
-    nbytes = readOptionsFromFile( options, &flags, &flagsMask, text, 1024,
+    readOptionsFromFile( options, &flags, &flagsMask, text, 1024,
 				    config_file);
 
     /* Initialize  the global xnots_t structure. */

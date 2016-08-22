@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------- #
 #
 # Created	: Fri 14 Apr 2006 07:20:44 PM CDT
-# Modified	: Sat 12 Mar 2011 03:33:52 PM EST
+# Modified	: Mon 22 Aug 2016 11:33:50 AM EDT
 # Author	: Gautam Iyer <gi1242@users.sourceforge.net>
 # Licence	: GPL2
 #
@@ -28,7 +28,7 @@ else
     CFLAGS += -DDEBUG_LEVEL=1 -g
 endif
 
-CFLAGS		+= -fno-strict-aliasing
+CFLAGS		+= -fno-strict-aliasing -fgnu89-inline
 CFLAGS		+= -DVERSION=\"$(VERSION)\" -Wall
 CFLAGS		+= $(shell pkg-config $(PKGS) --cflags)
 LDLIBS		+= $(shell pkg-config $(PKGS) --libs)

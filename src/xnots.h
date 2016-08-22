@@ -330,6 +330,7 @@ void		correctNoteGeometry	( Note		*note,
 					  unsigned	height
 					);
 void		correctNoteHeight	( Note *note );
+extern
 inline void	resetNoteWidth		( Note *note );
 void		freeNote		( Note *note );
 void		showNotes		();
