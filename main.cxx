@@ -8,7 +8,7 @@ int main(int argv, char **args)
     QApplication app(argv,args);
 
     QDir *notesDir = new QDir(QDir::homePath());
-    notesDir->cd(".xnots");
+    notesDir->cd(".local/xnots");
     QDir::setCurrent(notesDir->absolutePath());
     if ( !notesDir->exists() )
     {
