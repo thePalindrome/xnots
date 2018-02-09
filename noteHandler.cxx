@@ -8,7 +8,12 @@ noteHandler::noteHandler(QDir *notesDir)
     dir = notesDir;
     windows = new QHash<QString, QTextEdit*>();
     scanDir();
-    timer.start((1000)*10,this);
+    watcher.addPath(QDir::currentPath());
+    watcher.addPaths(dir->entryList(QDir::Files));
+    connect(&watcher, SIGNAL(directoryChanged(const QString &)),
+            this, SLOT(onDirChange(const QString &)));
+    connect(&watcher, SIGNAL(fileChanged(const QString &)),
+            this, SLOT(onFileChange(const QString &)));
 }
 
 noteHandler::~noteHandler()
@@ -16,9 +21,43 @@ noteHandler::~noteHandler()
     delete windows;
 }
 
-void noteHandler::timerEvent(QTimerEvent *event)
+void noteHandler::onFileChange(const QString &path)
 {
-    scanDir();
+    if (QFile::exists(path) == false)
+    {
+        windows->value(path)->close();
+        windows->remove(path);
+    }
+    else
+    {
+        QString *text = readNote(path);
+        windows->value(path)->setHtml(*text);
+        delete text;
+    }
+}
+
+void noteHandler::onDirChange(const QString &path)
+{
+    // path is the dir, I'll have to scan for files
+    dir->refresh();
+    QStringList files = dir->entryList(QDir::Files);
+    QStringList::const_iterator iter;
+    QStringList watched = watcher.files();
+    for (iter = files.constBegin(); iter != files.constEnd(); ++iter)
+    {
+        if ( watched.contains(*iter) )
+        {
+            continue;
+        }
+        watcher.addPath(*iter);
+        QTextEdit *textEdit = new QTextEdit();
+        QString *noteText = readNote(*iter);
+        textEdit->setHtml(*noteText);
+        textEdit->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowStaysOnBottomHint | Qt::WindowCloseButtonHint | Qt::Tool);
+        textEdit->show();
+        windows->insert(*iter, textEdit);
+        delete noteText;
+    }
 }
 
 QString *noteHandler::readNote(const QString filename)

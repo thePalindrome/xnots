@@ -7,6 +7,7 @@
 #include <QHash>
 #include <QStringList>
 #include <QTimerEvent>
+#include <QFileSystemWatcher>
 
 class noteHandler : public QObject
 {
@@ -16,13 +17,14 @@ public:
     noteHandler(QDir *notesDir);
     ~noteHandler();
 
-protected:
-    void timerEvent(QTimerEvent *event);
+public slots:
+    void onDirChange(const QString &path);
+    void onFileChange(const QString &path);
 
 private:
     QDir *dir;
     QHash<QString, QTextEdit*> *windows;
-    QBasicTimer timer;
+    QFileSystemWatcher watcher;
     void scanDir();
     QString *readNote(const QString filename);
 };
