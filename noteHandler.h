@@ -9,22 +9,21 @@
 #include <QTimerEvent>
 #include <QFileSystemWatcher>
 
-class noteHandler : public QObject
-{
+class noteHandler : public QObject {
     Q_OBJECT
 
-public:
-    noteHandler(QDir *notesDir);
-    ~noteHandler();
+    public:
+        noteHandler(QDir *notesDir);
+        ~noteHandler();
 
-public slots:
-    void onDirChange(const QString &path);
-    void onFileChange(const QString &path);
+        public slots:
+            void onDirChange(const QString &path);
+        void onFileChange(const QString &path);
 
-private:
-    QDir *dir;
-    QHash<QString, QTextEdit*> *windows;
-    QFileSystemWatcher watcher;
-    void scanDir();
-    QString *readNote(const QString filename);
+    private:
+        QDir *dir;
+        QHash<QString, QTextEdit*> *windows;
+        QFileSystemWatcher watcher;
+        void scanDir();
+        QString *readNote(const QString filename);
 };

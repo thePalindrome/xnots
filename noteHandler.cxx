@@ -3,8 +3,7 @@ extern "C" {
     #include <mkdio.h>
 }
 
-noteHandler::noteHandler(QDir *notesDir)
-{
+noteHandler::noteHandler(QDir *notesDir) {
     dir = notesDir;
     windows = new QHash<QString, QTextEdit*>();
     scanDir();
@@ -16,37 +15,30 @@ noteHandler::noteHandler(QDir *notesDir)
             this, SLOT(onFileChange(const QString &)));
 }
 
-noteHandler::~noteHandler()
-{
+noteHandler::~noteHandler() {
     delete windows;
 }
 
-void noteHandler::onFileChange(const QString &path)
-{
-    if (QFile::exists(path) == false)
-    {
+void noteHandler::onFileChange(const QString &path) {
+    if (QFile::exists(path) == false) {
         windows->value(path)->close();
         windows->remove(path);
     }
-    else
-    {
+    else {
         QString *text = readNote(path);
         windows->value(path)->setHtml(*text);
         delete text;
     }
 }
 
-void noteHandler::onDirChange(const QString &path)
-{
+void noteHandler::onDirChange(const QString &path) {
     // path is the dir, I'll have to scan for files
     dir->refresh();
     QStringList files = dir->entryList(QDir::Files);
     QStringList::const_iterator iter;
     QStringList watched = watcher.files();
-    for (iter = files.constBegin(); iter != files.constEnd(); ++iter)
-    {
-        if ( watched.contains(*iter) )
-        {
+    for (iter = files.constBegin(); iter != files.constEnd(); ++iter) {
+        if ( watched.contains(*iter) ) {
             continue;
         }
         watcher.addPath(*iter);
@@ -60,11 +52,9 @@ void noteHandler::onDirChange(const QString &path)
     }
 }
 
-QString *noteHandler::readNote(const QString filename)
-{
+QString *noteHandler::readNote(const QString filename) {
     QFile *file = new QFile(filename);
-    if (!file->open(QIODevice::ReadOnly | QIODevice::Text ))
-    {
+    if (!file->open(QIODevice::ReadOnly | QIODevice::Text )) {
         qWarning("ERROR: File %s unreadable", qPrintable(filename));
         return NULL;
     }
@@ -74,16 +64,13 @@ QString *noteHandler::readNote(const QString filename)
     QString *noteText = new QString();
     while ( !in.atEnd() ) {
         QString line = in.readLine();
-        if ( handlingOptions && line.startsWith("*") )
-        {
+        if ( handlingOptions && line.startsWith("*") ) {
             // TODO: Write handler for in-note options
         }
-        else if ( handlingOptions && !line.isEmpty() )
-        {
+        else if ( handlingOptions && !line.isEmpty() ) {
             handlingOptions = false;
         }
-        if ( !handlingOptions )
-        {
+        if ( !handlingOptions ) {
             noteText->append(line);
             noteText->append("\n");
         }
@@ -98,41 +85,34 @@ QString *noteHandler::readNote(const QString filename)
     return new QString(htmlBuf);
 }
 
-void noteHandler::scanDir()
-{
+void noteHandler::scanDir() {
     dir->refresh();
     QStringList notes = dir->entryList(QDir::Files);
-    
+
     QHash<QString, QTextEdit *>::iterator iter = windows->begin();
-    while ( iter != windows->end() )
-    {
-      if ( !notes.contains(iter.key()) )
-      {
-	iter.value()->close();
-	iter = windows->erase(iter);
-      }
-      else
-      {
-	iter.value()->setHtml(*readNote(iter.key()));
-	iter++;
-      }
+    while ( iter != windows->end() ) {
+        if ( !notes.contains(iter.key()) ) {
+            iter.value()->close();
+            iter = windows->erase(iter);
+        }
+        else {
+            iter.value()->setHtml(*readNote(iter.key()));
+            iter++;
+        }
     }
 
-    for ( int i=0; i < notes.size(); i++ )
-    {
-        if ( !windows->contains(notes.at(i)) )
-        {
-	    QTextEdit *textEdit = new QTextEdit();
-        QString *noteText = readNote(notes.at(i));
-	    if ( noteText == NULL )
-	    {
-		continue;
-	    }
-	    textEdit->setHtml(*noteText);
-	    textEdit->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowStaysOnBottomHint | Qt::WindowCloseButtonHint | Qt::Tool);
-	    textEdit->show();
-        windows->insert(notes.at(i), textEdit);
-        delete noteText;
-	}
+    for ( int i=0; i < notes.size(); i++ ){
+        if ( !windows->contains(notes.at(i)) ) {
+            QTextEdit *textEdit = new QTextEdit();
+            QString *noteText = readNote(notes.at(i));
+            if ( noteText == NULL ) {
+                continue;
+            }
+            textEdit->setHtml(*noteText);
+            textEdit->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowStaysOnBottomHint | Qt::WindowCloseButtonHint | Qt::Tool);
+            textEdit->show();
+            windows->insert(notes.at(i), textEdit);
+            delete noteText;
+        }
     }
 }

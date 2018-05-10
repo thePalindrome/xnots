@@ -1,3 +1,4 @@
 *.o
 xnots
 Makefile
+.qmake.stash
