@@ -12,7 +12,7 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DUSE_MARKDOWN -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -isystem /usr/include/libdrm -I/usr/lib64/qt5/mkspecs/linux-g++
@@ -50,10 +50,10 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = noteHandler.cxx \
-		main.cxx moc_noteHandler.cpp
-OBJECTS       = noteHandler.o \
-		main.o \
+SOURCES       = main.cxx \
+		noteHandler.cxx moc_noteHandler.cpp
+OBJECTS       = main.o \
+		noteHandler.o \
 		moc_noteHandler.o
 DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
@@ -231,6 +231,7 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt5/mkspecs/features/default_pre.prf \
@@ -249,8 +250,8 @@ DIST          = /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib64/qt5/mkspecs/features/yacc.prf \
 		/usr/lib64/qt5/mkspecs/features/lex.prf \
-		xnots.pro noteHandler.h noteHandler.cxx \
-		main.cxx
+		xnots.pro noteHandler.h main.cxx \
+		noteHandler.cxx
 QMAKE_TARGET  = xnots
 DESTDIR       = 
 TARGET        = xnots
@@ -438,6 +439,7 @@ Makefile: xnots.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /usr/lib64/qt5/m
 		/usr/lib64/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib64/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib64/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib64/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib64/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib64/qt5/mkspecs/features/default_pre.prf \
@@ -637,6 +639,7 @@ Makefile: xnots.pro /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf /usr/lib64/qt5/m
 /usr/lib64/qt5/mkspecs/features/qt_config.prf:
 /usr/lib64/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib64/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib64/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib64/qt5/mkspecs/features/toolchain.prf:
 /usr/lib64/qt5/mkspecs/features/default_pre.prf:
@@ -675,7 +678,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib64/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents noteHandler.h $(DISTDIR)/
-	$(COPY_FILE) --parents noteHandler.cxx main.cxx $(DISTDIR)/
+	$(COPY_FILE) --parents main.cxx noteHandler.cxx $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -729,11 +732,11 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-noteHandler.o: noteHandler.cxx noteHandler.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o noteHandler.o noteHandler.cxx
-
 main.o: main.cxx noteHandler.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cxx
+
+noteHandler.o: noteHandler.cxx noteHandler.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o noteHandler.o noteHandler.cxx
 
 moc_noteHandler.o: moc_noteHandler.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_noteHandler.o moc_noteHandler.cpp

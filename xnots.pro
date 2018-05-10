@@ -1,10 +1,9 @@
 # Custom .pro, try not to explode it!
 
 no_markdown {
-    SOURCES += noteHandler_noMarkdown.cxx
 } else {
     LIBS += -lmarkdown
-    SOURCES += noteHandler.cxx
+    DEFINES += USE_MARKDOWN
 }
 
 QT += widgets
@@ -18,4 +17,4 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += noteHandler.h
-SOURCES += main.cxx
+SOURCES += main.cxx noteHandler.cxx

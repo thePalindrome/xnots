@@ -2,3 +2,4 @@
 xnots
 Makefile
 .qmake.stash
+moc*

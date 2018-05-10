@@ -1,7 +1,9 @@
 #include "noteHandler.h"
-extern "C" {
-    #include <mkdio.h>
-}
+#ifdef USE_MARKDOWN
+    extern "C" {
+        #include <mkdio.h>
+    }
+#endif
 
 noteHandler::noteHandler(QDir *notesDir) {
     dir = notesDir;
@@ -76,13 +78,18 @@ QString *noteHandler::readNote(const QString filename) {
         }
     }
 
-    char *htmlBuf = 0;
-    MMIOT *doc = mkd_string(qPrintable(*noteText),noteText->length(),0);
-    mkd_compile(doc,0);
-    mkd_document(doc,&htmlBuf);
-    delete noteText;
     delete file;
-    return new QString(htmlBuf);
+
+    #ifdef USE_MARKDOWN
+        char *htmlBuf = 0;
+        MMIOT *doc = mkd_string(qPrintable(*noteText),noteText->length(),0);
+        mkd_compile(doc,0);
+        mkd_document(doc,&htmlBuf);
+        delete noteText;
+        return new QString(htmlBuf);
+    #else
+        return noteText;
+    #endif
 }
 
 void noteHandler::scanDir() {
